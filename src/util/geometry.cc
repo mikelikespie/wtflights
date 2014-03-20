@@ -7,21 +7,21 @@
 namespace bmc = boost::math::constants;
 
 // Algorithm from http://www.csee.umbc.edu/~squire/reference/polyhedra.shtml
-void wtflights::util::AddIcosahedronPoints(MultiPoint3D *vertices) { 
+void wtflights::util::AddIcosahedronPoints(MultiPoint3D *vertices) {
 	const float phi = bmc::phi<float>();
 	vertices->insert(vertices->begin(), {
-			Point3D(0, -1, -phi),
-			Point3D(0, -1,  phi),
-			Point3D(0,  1, -phi),
-			Point3D(0,  1,  phi),
-			Point3D(-1, -phi, 0),
-			Point3D(-1,  phi, 0),
-			Point3D(1,  -phi, 0),
-			Point3D(1,   phi, 0),
-			Point3D(-phi, 0, -1),
-			Point3D(-phi, 0,  1),
-			Point3D(phi,  0, -1),
-			Point3D(phi,  0,  1),
+        Point3D { 0.000,  0.000,  1.000},
+        Point3D { 0.894,  0.000,  0.447},
+        Point3D { 0.276,  0.851,  0.447},
+        Point3D {-0.724,  0.526,  0.447},
+        Point3D {-0.724, -0.526,  0.447},
+        Point3D { 0.276, -0.851,  0.447},
+        Point3D { 0.724,  0.526, -0.447},
+        Point3D {-0.276,  0.851, -0.447},
+        Point3D {-0.894,  0.000, -0.447},
+        Point3D {-0.276, -0.851, -0.447},
+        Point3D { 0.724, -0.526, -0.447},
+        Point3D { 0.000,  0.000, -1.000},
     });
 }
 

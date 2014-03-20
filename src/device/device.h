@@ -31,7 +31,9 @@ namespace device {
 		float g;
 		float b;
 	};
-
+    
+    
+    ColorRGB colorFromHSV(float h, float s, float v);
 	class TaskConfig {
 		private:
 			Interval repeatInterval_;
@@ -81,8 +83,6 @@ namespace device {
 		// This will copy the task
 		virtual void EnqueueTask(const Task &t, TaskConfig interval) = 0;
 	};
-
-
 }
 }
 

@@ -53,7 +53,14 @@
         "src/wtfsim/wtfsim.cc",
       ],
       'link_settings': {
-        'libraries': ['libsdl2.dylib', 'OpenGL.framework', 'System.framework', 'CoreFoundation.framework'],
+        'libraries': [
+          'libsdl2.dylib',
+          'OpenGL.framework',
+          'System.framework',
+          'CoreFoundation.framework',
+          'CoreGraphics.framework',
+          'CoreText.framework',
+        ],
       },
     },
   ],
