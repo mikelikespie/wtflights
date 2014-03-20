@@ -1,3 +1,4 @@
 [submodule "LEDscape"]
 	path = LEDscape
 	url = https://github.com/mikelikespie/LEDscape.git
+	branch = working-with-gyp
