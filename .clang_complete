@@ -1,0 +1,4 @@
+-I/usr/local/include/
+-std=c++11
+-stdlib=libc++
+-Isrc
