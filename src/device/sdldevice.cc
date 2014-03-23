@@ -45,7 +45,7 @@ namespace device {
 	Uint32 SDLDevice::RenderCallback(Uint32 interval, void *param) {
 		SDLDevice *device = static_cast<SDLDevice *>(param);
         if (!device->rendered_) {
-            return;
+            return interval;
         }
         device->rendered_ = false;
         SDL_Event event;
@@ -86,8 +86,7 @@ namespace device {
 				return;
 			}
             if (event.type == SDL_USEREVENT && event.user.code == USER_RENDER_CODE) {
-                Timestamp ts = std::chrono::system_clock::now().time_since_epoch() /
-                std::chrono::milliseconds(1);
+                Timestamp ts = std::chrono::system_clock::now().time_since_epoch() / std::chrono::milliseconds(1);
                 renderTask_(ts, renderInterval_);
                 rendered_ = true;
             }
@@ -158,10 +157,6 @@ namespace device {
     // This will copy the task
     void SDLDevice::SetRenderTask(const Task &t) {
         renderTask_ = t;
-    }
-    
-    // This will copy the task
-    void SDLDevice::EnqueueTask(const Task &t, TaskConfig interval) {
     }
 }
 }

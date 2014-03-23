@@ -23,7 +23,6 @@
       ],
     },
     {
-      # This defines interfaces that a device must conform to
       'target_name': 'device',
       'type': 'static_library',
       'dependencies': [
@@ -33,21 +32,37 @@
         "src/device/device.h",
         "src/device/device.cc",
       ],
-      'conditions': [
-        ['OS=="mac"', {
-            'sources': [
-              "src/device/sdldevice.h",
-              "src/device/sdldevice.cc",
-            ]
-          },
-        ],
-      ]
+    },
+    {
+      'target_name': 'sdldevice',
+      'type': 'static_library',
+      'dependencies': [
+        'device',
+      ],
+      'sources': [
+        "src/device/sdldevice.h",
+        "src/device/sdldevice.cc",
+      ],
+    },
+    {
+      'target_name': 'ledscapedevice',
+      'type': 'static_library',
+      'dependencies': [
+        'device',
+        'LEDscape/ledscape.gyp:ledscape',
+      ],
+      'sources': [
+        "src/device/ledscapedevice.h",
+        "src/device/ledscapedevice.cc",
+      ],
     },
     {
       'target_name': 'wtfsim',
       'type': 'executable',
       'dependencies': [
-        'wtflights', 'device'
+        'wtflights',
+        'device',
+        'sdldevice',
       ],
       'sources': [
         "src/wtfsim/wtfsim.cc",
@@ -61,6 +76,20 @@
           'CoreGraphics.framework',
           'CoreText.framework',
         ],
+      },
+    },
+    {
+      'target_name': 'wtfrunner',
+      'type': 'executable',
+      'dependencies': [
+        'wtflights',
+        'device',
+        'ledscapedevice',
+      ],
+      'sources': [
+        "src/wtfrunner/wtfrunner.cc",
+      ],
+      'link_settings': {
       },
     },
   ],
@@ -85,13 +114,6 @@
       'OTHER_CPLUSPLUSFLAGS' : ['-std=c++11','-stdlib=libc++'],
     },
   },
-  'conditions': [
-    ['OS=="mac"', {
-        'link_settings': {
-        },
-      },
-    ],
-  ],
   'make_global_settings': [
     ['CXX','/usr/bin/clang++'],
     ['LINK','/usr/bin/clang++'],

@@ -79,9 +79,6 @@ namespace device {
 		// Special task that is called when we are ready for a new frame.  This is driver dependent
 		// This will copy the task
 		virtual void SetRenderTask(const Task &t) = 0;
-
-		// This will copy the task
-		virtual void EnqueueTask(const Task &t, TaskConfig interval) = 0;
 	};
 }
 }

@@ -22,34 +22,11 @@ using namespace wtflights::device;
 int main(int argc, char** argv) {
 	SDLDevice device;
 	device.Init();
-
+    
 	MultiPoint3D points;
 	MultiPoint3D points2;
-
-	AddIcosahedronPoints(&points);
     
-    std::vector<PolygonIndex3> faces {
-		{0,1,2},
-		{0,2,3},
-		{0,3,4},
-		{0,4,5},
-		{0,5,1},
-		{11,6,7},
-		{11,7,8},
-		{11,8,9},
-		{11,9,10},
-		{11,10,6},
-		{1,2,6},
-		{2,3,7},
-		{3,4,8},
-		{4,5,9},
-		{5,1,10},
-		{6,7,2},
-		{7,8,3},
-		{8,9,4},
-		{9,10,5},
-		{10,6,1},
-	};
+	AddIcosahedronPoints(&points);
     
     
     
@@ -85,14 +62,14 @@ int main(int argc, char** argv) {
         doInterpolate(b, c);
         doInterpolate(a, c);
     }
-
+    
 	device.SetPixelPoints(points2);
     
     device.SetRenderTask([&device, &points2](Timestamp time, Interval elapsed) {
         float phase = time % 500000 / 500000.0;
         
         device.SetRotation(phase  * 360 , 0, 1, 0);
-
+        
         int i = 0;
         for (const auto &p : points2) {
             int lightphase = (int(2 * 360.0f * (float(i) / points2.size())) + int(phase * 30 * 360)) % 360;

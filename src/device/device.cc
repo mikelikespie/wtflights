@@ -17,7 +17,7 @@ ColorRGB colorFromHSV(float h, float s, float v )
         return ret;
     }
     h /= 60;			// sector 0 to 5
-    i = floor( h );
+    i = floorf( h );
     f = h - i;			// factorial part of h
     p = v * ( 1 - s );
     q = v * ( 1 - s * f );

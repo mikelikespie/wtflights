@@ -57,10 +57,6 @@ namespace device {
 		// This will copy the task
 		void SetRenderTask(const Task &t);
 
-		// This will copy the task
-		void EnqueueTask(const Task &t, TaskConfig interval);
-
-
 		void SetPixelPoints(const util::MultiPoint3D &points);
 	};
 }
