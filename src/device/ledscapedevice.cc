@@ -1,6 +1,6 @@
 
-
 #include <device/ledscapedevice.h>
+#include <iostream>
 
 extern "C" {
 #include <ledscape.h>
@@ -8,24 +8,25 @@ extern "C" {
 
 namespace wtflights {
 namespace device {
+    const int LEDScapeDevice::frameLogMultiple_;
+    
     LEDScapeDevice::LEDScapeDevice(uint16_t numPixels) : numPixels_(numPixels) {
-
+        lastLogFrame_ = std::chrono::system_clock::now();
     }
     
     void LEDScapeDevice::Init() {
         ledscape_ = ledscape_init(numPixels_);
-        
         lastRender_ = std::chrono::system_clock::now();
+        currentFrameHandle_ = ledscape_frame(ledscape_, frameNumber_ % 2);
     }
     
     // Starts the main runloop inifinitely
     void LEDScapeDevice::Run() {
         while (!finished_) {
-            
             std::chrono::system_clock::time_point now = std::chrono::system_clock::now();
             auto delta = now - lastRender_;
             lastRender_ = now;
-            renderTask_(now.time_since_epoch() / std::chrono::milliseconds(), delta / std::chrono::milliseconds());
+            renderTask_(now.time_since_epoch() / std::chrono::milliseconds(1), delta / std::chrono::milliseconds(1));
             currentFrameHandle_ = ledscape_frame(ledscape_, frameNumber_ % 2);
         }
     }
@@ -47,12 +48,19 @@ namespace device {
 		const uint32_t response = ledscape_wait(ledscape_);
 		ledscape_draw(ledscape_, frameNumber_ % 2);
         frameNumber_++;
+        
+        if (frameNumber_ % frameLogMultiple_ == 0 ) {
+            auto now = std::chrono::system_clock::now();
+            float fps = 1.0/(((now - lastLogFrame_) / frameLogMultiple_) / std::chrono::nanoseconds(1) / 1000000000.0);
+            lastLogFrame_ = now;
+            std::cout << "fps :" << fps << std::endl;
+        }
     }
     
     // Special task that is called when we are ready for a new frame.  This is driver dependent
     // This will copy the task
     void LEDScapeDevice::SetRenderTask(const Task &t) {
-            renderTask_ = t;
+        renderTask_ = t;
     }
 }
 }

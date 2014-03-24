@@ -72,6 +72,7 @@
       'link_settings': {
         'libraries': [
           '-lc++',
+          '-lc++abi',
         ],
       },
     },
@@ -126,6 +127,7 @@
     },
     'cflags': [
       '-O0',
+      '-g',
     ],
     'cflags_cc': [
       '-std=c++11',

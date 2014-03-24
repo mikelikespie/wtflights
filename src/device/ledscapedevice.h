@@ -3,6 +3,7 @@
 
 #include <memory>
 #include <vector>
+#include <deque>
 
 #include <util/geometry.h>
 #include <device/device.h>
@@ -15,13 +16,20 @@ namespace wtflights {
     namespace device {
         class LEDScapeDevice : public Device {
 		private:
+            typedef std::chrono::system_clock::time_point time_point;
+
             struct ledscape* ledscape_;
             struct ledscape_frame* currentFrameHandle_;
             
-            uint64_t frameNumber_;
+            uint64_t frameNumber_ = 0;
             Task renderTask_;
             uint16_t numPixels_;
             bool finished_ = false;
+            
+            time_point lastTime_;
+            
+            static const int frameLogMultiple_ = 120;
+            time_point lastLogFrame_;
             
             std::chrono::system_clock::time_point lastRender_;
 
