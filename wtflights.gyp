@@ -45,16 +45,35 @@
       ],
     },
     {
+      'target_name': 'cxxabishim',
+      'sources': [
+        "src/cxxabishim/unwind.c",
+      ],
+      'type': 'shared_library',
+      'link_settings': {
+        'libraries': [
+          '-lunwind',
+          '-lc++',
+        ],
+      },
+    },
+    {
       'target_name': 'ledscapedevice',
       'type': 'static_library',
       'dependencies': [
         'device',
+        'cxxabishim',
         'LEDscape/ledscape.gyp:ledscape',
       ],
       'sources': [
         "src/device/ledscapedevice.h",
         "src/device/ledscapedevice.cc",
       ],
+      'link_settings': {
+        'libraries': [
+          '-lc++',
+        ],
+      },
     },
     {
       'target_name': 'wtfsim',
@@ -106,6 +125,9 @@
       ],
     },
     'cflags': [
+      '-O0',
+    ],
+    'cflags_cc': [
       '-std=c++11',
       '-stdlib=libc++',
     ],
@@ -115,6 +137,7 @@
     },
   },
   'make_global_settings': [
+    ['CC','/usr/bin/clang'],
     ['CXX','/usr/bin/clang++'],
     ['LINK','/usr/bin/clang++'],
   ],
