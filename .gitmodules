@@ -2,3 +2,6 @@
 	path = LEDscape
 	url = https://github.com/mikelikespie/LEDscape.git
 	branch = working-with-gyp
+[submodule "googletest"]
+	path = googletest
+	url = https://chromium.googlesource.com/external/googletest

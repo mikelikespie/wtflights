@@ -4,14 +4,16 @@
 #include <limits>
 #include <cstdint>
 #include <functional>
+#include <algorithm>
+#include <chrono>
 
 namespace wtflights {
 namespace device {
 	// millis since epoch
-	typedef std::int64_t Timestamp;
+	typedef std::chrono::system_clock::time_point Timestamp;
 
 	// millis
-	typedef std::int64_t Interval;
+	typedef std::chrono::system_clock::duration Interval;
 
 	typedef std::int32_t PixelIndex;
 
@@ -25,15 +27,33 @@ namespace device {
 
 	typedef std::function<void(Timestamp time, Interval elapsed)> Task;
 
+
+	class ColorRGB8 {
+    public:
+		uint8_t r;
+		uint8_t g;
+		uint8_t b;
+	};
+    
 	class ColorRGB {
 		public:
 		float r;
 		float g;
 		float b;
+        
+        ColorRGB8 rgb8() const {
+            return ColorRGB8 {
+                static_cast<uint8_t>(std::min<int32_t>(r * 255, 255)),
+                static_cast<uint8_t>(std::min<int32_t>(g * 255, 255)),
+                static_cast<uint8_t>(std::min<int32_t>(b * 255, 255))
+            };
+        }
 	};
     
     
+    
     ColorRGB colorFromHSV(float h, float s, float v);
+
 	class TaskConfig {
 		private:
 			Interval repeatInterval_;
